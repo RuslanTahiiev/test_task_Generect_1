@@ -1,0 +1,20 @@
+[
+    {
+        "name": "Fanta",
+        "company_url": "https://fanta.com",
+        "location": "Italy, Roma",
+        "revenue": "$365M"
+    },
+    {
+        "name": "Coca-Cola",
+        "company_url": "https://cocacola.com",
+        "location": "UK, London",
+        "revenue": "$675M"
+    },
+    {
+        "name": "Sprite",
+        "company_url": "https://sprite.com",
+        "location": "UK, London",
+        "revenue": "$685M"
+    }
+]

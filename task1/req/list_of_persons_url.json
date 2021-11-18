@@ -1,0 +1,17 @@
+[
+    {
+        "full_name": "Joe Doe",
+        "profile_url": "https://linkedin.com/in/joedoe",
+        "company_fk": "https://fanta.com"
+    },
+    {
+        "full_name": "Big Ben",
+        "profile_url": "https://linkedin.com/in/bigben",
+        "company_fk": "https://cocacola.com"
+    },
+    {
+        "full_name": "Jim Beam",
+        "profile_url": "https://linkedin.com/in/beamjim",
+        "company_fk": "https://fanta.com"
+    }
+]
