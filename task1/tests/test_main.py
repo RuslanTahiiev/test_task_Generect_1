@@ -70,7 +70,7 @@ class TestTaskTestCase(unittest.TestCase):
 
     # Method GET_REQ
     def test_get_req(self):
-        self.assertEqual(self.persons, Hub.get_req('person_url'))
+        self.assertEqual(self.person, Hub.get_req('person_url')[0])
 
     # Class Lead
     def test_Lead(self):
@@ -93,22 +93,17 @@ class TestTaskTestCase(unittest.TestCase):
             revenue="$675M"
         )
 
-        json_data = {
-                        "name": "Coca-Cola",
-                        "company_url": "https://cocacola.com",
-                        "location": "UK, London",
-                        "revenue": "$675M",
-                        "leads": [
-                            {
-                                "full_name": "Big Ben",
-                                "job_title": "SMM",
-                                "profile_url": "https://linkedin.com/in/bigben",
-                                "location": "UK",
-                                "email": "mail@domain.com",
-                                "phone_number": "+2-354-489-4804"
-                            }
-                        ]
-                    }
+        json_data = [
+            {
+                "full_name": "Big Ben",
+                "job_title": "SMM",
+                "profile_url": "https://linkedin.com/in/bigben",
+                "location": "UK",
+                "email": "mail@domain.com",
+                "phone_number": "+2-354-489-4804"
+            }
+        ]
+
         self.assertEqual(company.create_company_report(), json_data)
 
     # Class Searcher

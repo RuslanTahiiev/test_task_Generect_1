@@ -58,7 +58,7 @@ class Company:
         return f'{self.name} in list!\n'
 
     def create_company_report(self):
-        self._create_data()
+        response = self._create_data()
 
         if not os.path.exists(RESULT_ROOT):
             os.mkdir(RESULT_ROOT)
@@ -68,7 +68,7 @@ class Company:
         with open(f'{RESULT_ROOT}/{self.name}_report.json', 'w', encoding='utf-8') as file:
             json.dump(self._format_json(), file, indent=4, ensure_ascii=False)
 
-        return self._format_json()
+        return response
 
     def _format_json(self):
         return {
@@ -80,6 +80,7 @@ class Company:
             }
 
     def _create_data(self):
+        leads = []
         persons = Hub.get_req('list_of_persons_url')
         for person in persons:
             if person['company_fk'] == self.company_url:
@@ -94,8 +95,10 @@ class Company:
                             email=p['email'],
                             phone_number=p['phone_number']
                         )
+                        leads.append(lead.add_lead_to_company())
                         self.leads.append(lead.add_lead_to_company())
                         print('Success!')
+        return leads
 
 
 class Searcher:
@@ -103,9 +106,11 @@ class Searcher:
         self.companies = Hub.get_req('list_of_companies_url')
 
     def go(self):
-        self.__parser_list_of_companies()
+        response = self.__parser_list_of_companies()
+        return response
 
     def __parser_list_of_companies(self):
+        leads = []
         for c in self.companies:
             companies = Hub.get_req('company_url')
             for company in companies:
@@ -117,8 +122,9 @@ class Searcher:
                         revenue=company['revenue']
                     )
                     print('Create company report for: ', company_obj)
-                    company_obj.create_company_report()
+                    leads.extend(company_obj.create_company_report())
         print('Done!')
+        return  leads
 
 
 def main():
@@ -127,7 +133,9 @@ def main():
         os.mkdir(REQ_DIR)
 
     searcher = Searcher()
-    searcher.go()
+    data = searcher.go()
+    with open(f'{RESULT_ROOT}/all_leads.json', 'w', encoding='utf-8') as file:
+        json.dump(data, file, indent=4, ensure_ascii=False)
 
 
 if __name__ == '__main__':
